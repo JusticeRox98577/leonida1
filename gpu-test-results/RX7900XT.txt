@@ -1,0 +1,21 @@
+GPU:        AMD Radeon RX 7900 XT (RDNA3, PCI 1002:744C), subgroup 32..64
+Driver:     AMD proprietary 26.11.2 (LLPC), Vulkan 1.4.359
+OS:         Windows 11
+Commit:     8f481cf16 (main, 2026-11-23)
+Tools:      llvm-mc from conda-forge llvm-tools 23.1.6, Vulkan SDK 1.4.363,
+            MSVC 19.51.36260.0 (VS Build Tools 2026), Ninja via scripts\build_runtime.ps1
+run_gpu_tests.py: 257 shaders: 257 translated, 257 pass spirv-val
+            native:  229/248 passed, 16 skipped, 3 failed
+Failed:     cs_imgload_tfe, cs_imgload_d16_tfe: exit 1 ("device: AMD Radeon RX 7900 XT").
+            Both fail again with --filter tfe and with VK_LOADER_LAYERS_DISABLE=~implicit~.
+            cs_resinfo: "vk_store_test printed no uint words" in the full run only.
+            Passed on 2 isolated --filter resinfo reruns, with and without implicit layers.
+Skipped:    16 skips are the documented "run by d3d12_*_test / w64_graphics.py" cases:
+            cs_buf_counter, cs_buf_typed, cs_m4_fill, cs_m4_indirect, ps_live_width,
+            ps_m15, ps_m2, ps_m2_array, ps_m2_literal, ps_m2_uoff, ps_m3, ps_m3_post,
+            ps_m3_query, vs_m15, vs_m2, vs_m3.
+Notes:
+- Implicit layers present during the full run: Overwolf overlay and OBS hook,
+  Steam overlay, EOS overlay, Rockstar Social Club.
+- System also has an AMD Radeon iGPU (PCI 1002:164E); the suite ran on the 7900 XT.
+- AI-assisted (Claude).
